@@ -1,4 +1,5 @@
 import 'package:class_statement/common/models/vo_catalog.dart';
+import 'package:class_statement/common/w_bottom_bar.dart';
 import 'package:class_statement/stateful_widget/f_cart.dart';
 import 'package:class_statement/stateful_widget/f_catalog.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
 
   // 선택된 catalog 정보를 담을 수 있는 자료구조 선언
   List<Catalog> catalogList = [
-    Catalog.name(color: Colors.red, title: "테스트 1"),
-    Catalog.name(color: Colors.orange, title: "테스트 2")
+
   ];
 
   // 샘플 데이터 (local DB, 통신)
@@ -53,15 +53,26 @@ class _HomeScreen1State extends State<HomeScreen1> {
         title: const Text("My Catalog"),
       ),
       body: IndexedStack(
+        index: currentIndex,
         children: [
-          // CatalogWidget(
-          //     responseListData: responseListData,
-          //     cartCatalogList: catalogList,
-          //     onPressedCatalog: onPressedCatalog),
-          CartWidget(cartList: catalogList,
+          CatalogWidget(
+              responseListData: responseListData,
+              cartCatalogList: catalogList,
+              onPressedCatalog: onPressedCatalog),
+          CartWidget(
+            cartList: catalogList,
             onPressedCatalog: onPressedCatalog,
           ),
         ],
+      ),
+      bottomNavigationBar: BottomBar(
+        currentIndex: currentIndex,
+        cartTotal: '${catalogList.length}',
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
       ),
     );
   }
