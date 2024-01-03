@@ -11,6 +11,7 @@ class CartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("여기는 Cart Build 함수 실행");
     // BuildContext 안에서 사용해야 함
     InheritedCartWidget? inheritedCartWidget = InheritedCartWidget.of(context);
     return inheritedCartWidget == null

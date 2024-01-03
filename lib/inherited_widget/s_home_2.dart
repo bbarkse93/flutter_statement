@@ -39,10 +39,20 @@ class _HomeScreen2State extends State<HomeScreen2> {
     // 콜백이 일어 나면 UI 업데이트 처리
     setState(() {
       if (catalogList.contains(catalog)) {
-        // 리스트에 object 포함 하고 있다면 삭제 처리
-        catalogList.remove(catalog);
-      } else {
-        catalogList.add(catalog); // add 처리
+        // 삭제해야 함 -> cartLiat객체를 새로 생성해서 처리해야함
+        // 깊은 복사 개념을 동작
+        // [1, 2, 3, 4] => 4만 삭제
+        // catalogList 변수에다가 새로운 List객체를 생성해서 기존에 있던 데이터
+        // [1, 2, 3]을 넣는 것이 목표
+        catalogList = catalogList.where((e) {
+          return e != catalog;
+        }).toList();
+      }
+      else{
+        // 새로운 object를 추가하는 코드 => 깊은 복사
+        // [1,2,3] + 4
+        // 스프레드 연산자
+        catalogList = [...catalogList, catalog];
       }
     });
   }
@@ -62,11 +72,7 @@ class _HomeScreen2State extends State<HomeScreen2> {
         body: IndexedStack(
           index: currentIndex,
           children: [
-            CatalogWidget(
-              responseListData: responseListData,
-              cartCatalogList: catalogList,
-              onPressedCatalog: onPressedCatalog,
-            ),
+            CatalogWidget(),
             CartWidget(),
           ],
         ),
