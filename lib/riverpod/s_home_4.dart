@@ -3,6 +3,7 @@ import 'package:class_statement/common/w_bottom_bar.dart';
 import 'package:class_statement/riverpod/f_cart.dart';
 import 'package:class_statement/riverpod/f_catalog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeScreen4 extends StatefulWidget {
   const HomeScreen4({super.key});
@@ -29,26 +30,28 @@ class _HomeScreen4State extends State<HomeScreen4> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("My Catalog"),
-      ),
-      body: IndexedStack(
-        index: currentIndex,
-        children: [
-          CatalogWidget(),
-          CartWidget(),
-        ],
-      ),
-      bottomNavigationBar: BottomBar(
-        currentIndex: currentIndex,
-        cartTotal: '${0}',
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+    return ProviderScope(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text("My Catalog"),
+        ),
+        body: IndexedStack(
+          index: currentIndex,
+          children: const [
+            CatalogWidget(),
+            CartWidget(),
+          ],
+        ),
+        bottomNavigationBar: BottomBar(
+          currentIndex: currentIndex,
+          cartTotal: '${0}',
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }
