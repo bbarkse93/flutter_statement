@@ -17,10 +17,18 @@ class RiverpodCart extends Notifier<List<Catalog>>{
   // 행위
   void onCatalogPressed(Catalog catalog){
     // 얕은 복사 (수정필요)
-    if(state.contains(catalog)){
-      state.remove(catalog);
+    // if(state.contains(catalog)){
+    //   state.remove(catalog);
+    // } else {
+    //   state.add(catalog);
+    // }
+    // 깊은 복사 수정
+    if (state.contains(catalog)) {
+      state = state.where((element) {
+        return element != catalog;
+      }).toList();
     } else {
-      state.add(catalog);
+      state = [...state, catalog];
     }
   }
 }
