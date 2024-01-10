@@ -2,6 +2,7 @@ import 'package:class_statement/common/models/vo_catalog.dart';
 import 'package:class_statement/common/w_bottom_bar.dart';
 import 'package:class_statement/riverpod/f_cart.dart';
 import 'package:class_statement/riverpod/f_catalog.dart';
+import 'package:class_statement/riverpod/state/riverpod_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,7 +17,7 @@ class _HomeScreen4State extends State<HomeScreen4> {
   // 현재 선택된 index
   int currentIndex = 0;
 
-    // 샘플 데이터 (local DB, 통신)
+  // 샘플 데이터 (local DB, 통신)
   late List<Catalog> responseListData;
 
   // 메모리에 올라갈 때 딱 한번만 초기화 되는 부분
@@ -43,13 +44,18 @@ class _HomeScreen4State extends State<HomeScreen4> {
             CartWidget(),
           ],
         ),
-        bottomNavigationBar: BottomBar(
-          currentIndex: currentIndex,
-          cartTotal: '${0}',
-          onTap: (index) {
-            setState(() {
-              currentIndex = index;
-            });
+        // 특정 부분만 랜더링 하고 싶다면
+        bottomNavigationBar: Consumer(
+          builder: (context, ref, child) {
+            return BottomBar(
+              currentIndex: currentIndex,
+              cartTotal: '${ref.watch(badgeProvider)}',
+              onTap: (index) {
+                setState(() {
+                  currentIndex = index;
+                });
+              },
+            );
           },
         ),
       ),

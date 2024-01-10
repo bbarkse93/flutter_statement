@@ -22,7 +22,7 @@ class ProviderBadge extends ChangeNotifier {
   // 메모리 해제 처리
   @override
   void dispose(){
-    //메모리에서 제거 처리
+    //메모리에서 제거 처리 (Memory leak 예방)
     providerCart.removeListener(providerCartListener);
     // 부모 클래스에 함수 호출
     super.dispose();
